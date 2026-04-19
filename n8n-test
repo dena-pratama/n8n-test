@@ -1,0 +1,462 @@
+---
+const site = {
+  title: "FlowMail — Email Automation That Converts",
+  description:
+    "FlowMail helps growth teams automate behavioral email campaigns with smart segmentation, drag-and-drop workflows, and analytics that move the needle.",
+  url: "https://www.flowmail.com",
+  image: "/images/flowmail-hero-800.webp"
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{site.title}</title>
+    <meta name="description" content={site.description} />
+    <link rel="canonical" href={site.url} />
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={site.title} />
+    <meta property="og:description" content={site.description} />
+    <meta property="og:url" content={site.url} />
+    <meta property="og:image" content={site.image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={site.title} />
+    <meta name="twitter:description" content={site.description} />
+    <meta name="twitter:image" content={site.image} />
+
+    <!-- Structured data: SoftwareApplication -->
+    <script type="application/ld+json" defer>
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "FlowMail",
+        "url": "{site.url}",
+        "description": "{site.description}",
+        "image": "{site.image}",
+        "operatingSystem": "Web",
+        "applicationCategory": "BusinessApplication",
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "USD"
+        }
+      }
+    </script>
+
+    <!-- Inline critical CSS (minimal): ensures first paint & mobile-first layout -->
+    <style>
+      :root {
+        --brand: #0f172a; /* slate-900 */
+        --accent: #06b6d4; /* teal-400 */
+        --muted: #64748b; /* slate-500 */
+        --bg: #ffffff;
+      }
+      html,body{height:100%}
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+          "Segoe UI", Roboto, "Helvetica Neue", Arial;
+        color: var(--brand);
+        background: var(--bg);
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        line-height:1.4;
+      }
+      /* Basic utility fallbacks for small-critical layout before Tailwind loads */
+      .container{width:100%;max-width:1024px;margin-inline:auto;padding-inline:1rem}
+      .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.75rem 1rem;border-radius:.5rem;border:0;cursor:pointer}
+      .btn-primary{background:var(--accent);color:white}
+      .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      /* Simple responsive grid fallback */
+      .grid{display:grid;gap:1rem}
+      @media(min-width:768px){.md-grid-2{grid-template-columns:1fr 1fr}}
+      @media(min-width:1024px){.lg-grid-3{grid-template-columns:repeat(3,1fr)}}
+    </style>
+
+    <!-- Defer full Tailwind stylesheet (add your built Tailwind CSS file at /styles/tailwind.css) -->
+    <link rel="stylesheet" href="/styles/tailwind.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="/styles/tailwind.css"></noscript>
+
+    <!-- Favicon (small, non-blocking) -->
+    <link rel="icon" href="/favicon.ico" />
+
+    <!-- Minimal inline script for mobile nav toggle & small interactions (deferred) -->
+    <script type="module" defer>
+      const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
+      on(document, "DOMContentLoaded", () => {
+        const btn = document.getElementById("nav-toggle");
+        const nav = document.getElementById("nav-menu");
+        if (btn && nav) {
+          btn.addEventListener("click", () => {
+            const expanded = btn.getAttribute("aria-expanded") === "true";
+            btn.setAttribute("aria-expanded", String(!expanded));
+            nav.classList.toggle("hidden");
+          });
+        }
+
+        // simple client-side email capture example for demo (no network request)
+        const form = document.getElementById("cta-form");
+        if (form) {
+          form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const input = form.querySelector('input[name="email"]');
+            if (!input || !input.value) return;
+            // lightweight validation
+            const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
+            if (!valid) {
+              input.setCustomValidity("Please enter a valid email");
+              input.reportValidity();
+              return;
+            }
+            input.setCustomValidity("");
+            // Show a lightweight success state
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.innerText = "You're signed up — Check your inbox!";
+            setTimeout(() => {
+              btn.disabled = false;
+              btn.innerText = "Get started — it's free";
+              input.value = "";
+            }, 2200);
+          });
+        }
+      });
+    </script>
+  </head>
+
+  <body class="antialiased">
+    <header class="bg-white shadow-sm">
+      <div class="container flex items-center justify-between py-4">
+        <a href="/" class="flex items-center gap-3">
+          <!-- Inline SVG logo for fast paint -->
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden>
+            <rect width="24" height="24" rx="6" fill="#06b6d4"></rect>
+            <path d="M7 12.5L10 9.5l4 4 6-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+          <span class="font-semibold text-lg">{site.title}</span>
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6" aria-label="Primary navigation">
+          <a href="#features" class="text-sm text-slate-600 hover:text-slate-900">Features</a>
+          <a href="#testimonials" class="text-sm text-slate-600 hover:text-slate-900">Customers</a>
+          <a href="#pricing" class="text-sm text-slate-600 hover:text-slate-900">Pricing</a>
+          <a href="#cta" class="btn btn-primary ml-2 text-sm">Get started — it's free</a>
+        </nav>
+
+        <!-- Mobile nav toggle -->
+        <div class="md:hidden">
+          <button id="nav-toggle" aria-expanded="false" aria-controls="nav-menu" class="p-2 rounded-md focus:outline-none focus:ring" aria-label="Open menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden>
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="#0f172a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile nav menu (kept simple & accessible) -->
+      <div id="nav-menu" class="hidden md:hidden border-t">
+        <div class="container py-4 flex flex-col gap-3">
+          <a href="#features" class="text-slate-700">Features</a>
+          <a href="#testimonials" class="text-slate-700">Customers</a>
+          <a href="#pricing" class="text-slate-700">Pricing</a>
+          <a href="#cta" class="btn btn-primary mt-2 w-full text-center">Get started — it's free</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <main>
+      <section id="hero" class="bg-gradient-to-b from-white to-slate-50">
+        <div class="container py-12 md:py-16 lg:py-24 flex flex-col md:grid md-grid-2 items-center gap-8">
+          <div>
+            <p class="text-sm text-teal-600 font-medium inline-flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M12 2v20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M5 7h14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+              </svg>
+              New: Free trial — No card required
+            </p>
+
+            <h1 class="mt-4 text-3xl sm:text-4xl md:text-5xl font-extrabold leading-tight">
+              Email automation that actually grows revenue
+            </h1>
+
+            <p class="mt-4 text-slate-600 max-w-xl">
+              FlowMail combines behavioral triggers, easy-to-use workflows, and conversion-focused templates so you can send the right message at the right time — without engineering help.
+            </p>
+
+            <div class="mt-6 flex items-center gap-3">
+              <a href="#cta" class="btn btn-primary text-sm shadow-sm">Get started — it's free</a>
+              <a href="#features" class="text-sm text-slate-700 hover:underline">See features</a>
+            </div>
+
+            <!-- Lightweight social proof row -->
+            <div class="mt-6 flex items-center gap-4 text-slate-500 text-sm">
+              <div class="flex items-center gap-2">
+                <!-- Small avatars (optimized) -->
+                <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?w=64&q=60&auto=format&fit=crop&crop=faces" alt="" width="28" height="28" class="rounded-full" loading="lazy"/>
+                <img src="https://images.unsplash.com/photo-1545996124-8f2f4b3d9a9b?w=64&q=60&auto=format&fit=crop&crop=faces" alt="" width="28" height="28" class="rounded-full -ml-2" loading="lazy"/>
+                <img src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=64&q=60&auto=format&fit=crop&crop=faces" alt="" width="28" height="28" class="rounded-full -ml-2" loading="lazy"/>
+              </div>
+              <span>Trusted by teams at <strong class="text-slate-800">Acme, Kinetix, and BrightCap</strong></span>
+            </div>
+          </div>
+
+          <!-- hero image — use <picture> with webp & jpg, correct sizes to avoid CLS -->
+          <div class="w-full">
+            <picture>
+              <source type="image/webp" srcset="/images/flowmail-hero-800.webp 800w, /images/flowmail-hero-1200.webp 1200w" sizes="(min-width:1024px) 50vw, 100vw">
+              <source type="image/jpeg" srcset="/images/flowmail-hero-800.jpg 800w, /images/flowmail-hero-1200.jpg 1200w" sizes="(min-width:1024px) 50vw, 100vw">
+              <img src="/images/flowmail-hero-800.webp" alt="FlowMail dashboard showing automated email workflow" width="1200" height="800" class="w-full rounded-xl shadow-md" loading="eager" fetchpriority="high">
+            </picture>
+          </div>
+        </div>
+      </section>
+
+      <!-- FEATURES / BENEFITS -->
+      <section id="features" class="py-12 md:py-16">
+        <div class="container">
+          <div class="max-w-2xl">
+            <h2 class="text-2xl font-bold">Everything you need to convert more users</h2>
+            <p class="mt-2 text-slate-600">Focus on what drives growth — we handle the workflows, segmentation, and analytics.</p>
+          </div>
+
+          <div class="mt-8 grid lg-grid-3 gap-6">
+            <!-- Feature 1 -->
+            <article class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="p-3 bg-teal-50 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M3 12h18" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M12 3v18" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Behavioral Triggers</h3>
+                  <p class="mt-1 text-sm text-slate-600">React to user actions like signups, purchases, or inactivity — automatically.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 2 -->
+            <article class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="p-3 bg-teal-50 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M3 7h18M3 12h18M3 17h18" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Drag & Drop Workflows</h3>
+                  <p class="mt-1 text-sm text-slate-600">Build complex journeys visually — no engineering required.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 3 -->
+            <article class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="p-3 bg-teal-50 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M3 5h18v14H3z" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M8 9h8" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">A/B Testing</h3>
+                  <p class="mt-1 text-sm text-slate-600">Ship winning messages with built-in experiments and clear reporting.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 4 -->
+            <article class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="p-3 bg-teal-50 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M12 2l3 7h7l-5.5 4 2 7L12 17l-6.5 3 2-7L2 9h7z" stroke="#06b6d4" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Deliverability & Inbox Tools</h3>
+                  <p class="mt-1 text-sm text-slate-600">Industry best practices and deliverability insights to keep your emails reaching users.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 5 -->
+            <article class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="p-3 bg-teal-50 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M12 3v18" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>
+                    <path d="M3 12h18" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Segmented Personalization</h3>
+                  <p class="mt-1 text-sm text-slate-600">Target precisely with user attributes and behaviors to increase conversions.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Feature 6 -->
+            <article class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-center gap-4">
+                <div class="p-3 bg-teal-50 rounded-lg">
+                  <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M3 12a9 9 0 0018 0" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" />
+                    <path d="M12 3v6l3 1" stroke="#06b6d4" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="font-semibold">Real-time Analytics</h3>
+                  <p class="mt-1 text-sm text-slate-600">Actionable reports showing opens, clicks, conversions, and revenue impact.</p>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- SOCIAL PROOF / TESTIMONIALS -->
+      <section id="testimonials" class="py-12 bg-slate-50">
+        <div class="container">
+          <h2 class="text-2xl font-bold">Loved by growth teams</h2>
+          <p class="mt-2 text-slate-600 max-w-xl">Hear from customers who scaled conversions with FlowMail.</p>
+
+          <div class="mt-8 grid gap-6 md:grid-cols-2">
+            <!-- Testimonial 1 -->
+            <blockquote class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-start gap-4">
+                <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=96&q=60&auto=format&fit=crop&crop=faces" alt="Maya J., Head of Growth" width="56" height="56" class="rounded-full" loading="lazy"/>
+                <div>
+                  <p class="text-slate-800 font-semibold">"We saw a 32% lift in trial-to-paid conversions in 60 days."</p>
+                  <p class="mt-2 text-sm text-slate-600">FlowMail made it simple to test different onboarding flows and capture revenue faster.</p>
+                  <footer class="mt-3 text-xs text-slate-500">Maya J., Head of Growth — Kinetix</footer>
+                </div>
+              </div>
+            </blockquote>
+
+            <!-- Testimonial 2 -->
+            <blockquote class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-start gap-4">
+                <img src="https://images.unsplash.com/photo-1545996124-8f2f4b3d9a9b?w=96&q=60&auto=format&fit=crop&crop=faces" alt="Liam R., Marketing Lead" width="56" height="56" class="rounded-full" loading="lazy"/>
+                <div>
+                  <p class="text-slate-800 font-semibold">"No dev work required — our ops team owns the campaigns now."</p>
+                  <p class="mt-2 text-sm text-slate-600">The visual workflow builder reduced turnaround and improved collaboration across teams.</p>
+                  <footer class="mt-3 text-xs text-slate-500">Liam R., Marketing Lead — BrightCap</footer>
+                </div>
+              </div>
+            </blockquote>
+
+            <!-- Testimonial 3 -->
+            <blockquote class="p-6 bg-white border rounded-lg shadow-sm">
+              <div class="flex items-start gap-4">
+                <img src="https://images.unsplash.com/photo-1544006659-f0b21884ce1d?w=96&q=60&auto=format&fit=crop&crop=faces" alt="Sofia P., Product Manager" width="56" height="56" class="rounded-full" loading="lazy"/>
+                <div>
+                  <p class="text-slate-800 font-semibold">"Detailed analytics finally tied email to revenue."</p>
+                  <p class="mt-2 text-sm text-slate-600">We can see exactly which flows generate MRR and iterate fast.</p>
+                  <footer class="mt-3 text-xs text-slate-500">Sofia P., Product Manager — Acme</footer>
+                </div>
+              </div>
+            </blockquote>
+
+            <!-- Testimonial 4 (Small quote) -->
+            <blockquote class="p-6 bg-white border rounded-lg shadow-sm">
+              <p class="text-slate-800 font-semibold">"Reliable, fast, and easy to use."</p>
+              <p class="mt-2 text-sm text-slate-600">Integrations and deliverability tools saved us weeks of work.</p>
+              <footer class="mt-3 text-xs text-slate-500">— Julian, CTO</footer>
+            </blockquote>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONVERSION CTA -->
+      <section id="cta" class="py-12">
+        <div class="container max-w-3xl bg-gradient-to-r from-white to-slate-50 rounded-xl p-8">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+            <div>
+              <h2 class="text-xl font-bold">Ready to increase conversions with smarter email?</h2>
+              <p class="mt-1 text-slate-600">Start your free trial — no credit card required. Onboard your first campaign in under 10 minutes.</p>
+            </div>
+
+            <form id="cta-form" class="flex gap-3 flex-col sm:flex-row items-stretch md:items-center" aria-label="Email capture form">
+              <label for="email" class="sr-only">Email address</label>
+              <input type="email" id="email" name="email" placeholder="Your work email" required class="px-4 py-3 border rounded-md w-full sm:w-auto sm:flex-1" />
+              <button type="submit" class="btn btn-primary">Get started — it's free</button>
+            </form>
+          </div>
+
+          <p class="mt-4 text-xs text-slate-500">By signing up you agree to our <a href="/terms" class="underline">Terms</a> and <a href="/privacy" class="underline">Privacy Policy</a>.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t">
+      <div class="container py-8">
+        <div class="flex flex-col md:flex-row md:justify-between gap-6">
+          <div>
+            <a href="/" class="flex items-center gap-3">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <rect width="24" height="24" rx="6" fill="#06b6d4"></rect>
+                <path d="M7 12.5L10 9.5l4 4 6-6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <span class="font-semibold">{site.title}</span>
+            </a>
+            <p class="mt-3 text-sm text-slate-600 max-w-xs">Automate emails that convert. Scale faster with FlowMail.</p>
+          </div>
+
+          <nav aria-label="Footer" class="flex gap-8">
+            <div>
+              <h4 class="font-medium">Product</h4>
+              <ul class="mt-2 text-sm text-slate-600">
+                <li><a href="#features" class="hover:underline">Features</a></li>
+                <li><a href="#pricing" class="hover:underline">Pricing</a></li>
+                <li><a href="/docs" class="hover:underline">Docs</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 class="font-medium">Company</h4>
+              <ul class="mt-2 text-sm text-slate-600">
+                <li><a href="/about" class="hover:underline">About</a></li>
+                <li><a href="/careers" class="hover:underline">Careers</a></li>
+                <li><a href="/blog" class="hover:underline">Blog</a></li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <div class="mt-8 text-sm text-slate-500 flex justify-between items-center">
+          <p>© {new Date().getFullYear()} {site.title}. All rights reserved.</p>
+          <div class="flex items-center gap-3">
+            <a href="https://twitter.com" aria-label="Twitter" class="text-slate-500 hover:text-slate-700">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M23 3a10.9 10.9 0 01-3.14 1.53A4.48 4.48 0 0012.5 7v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+            <a href="https://linkedin.com" aria-label="LinkedIn" class="text-slate-500 hover:text-slate-700">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                <path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-14h4v2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- No external JS heavy libraries; keep client-side bundle minimal -->
+    <noscript>
+      <style>
+        .hidden { display: block !important; }
+      </style>
+      <div class="container text-sm text-yellow-800 mt-4">JavaScript is disabled in your browser — some interactions may not work.</div>
+    </noscript>
+  </body>
+</html>
